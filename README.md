@@ -21,6 +21,3 @@ will return a json object of:
 
 ## The Dockerfile
 There are actually two Dockerfiles. One for production, and one for testing. The second uses the first as a base image, and so it contains all the application code and configurations, and running within the same environment as the production container; e.g. the same node, npm and packages versions.
- 
-## License 
-The MIT License (MIT)
