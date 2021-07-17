@@ -46,10 +46,11 @@ pipeline {
             }
         }
 
-        stage('Test image') {  
+        stage('Run Test cases inside container') {  
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
+                        bat "docker exec -d ${containername} /bin/bash npm test"
                         // docker.image("${dockerimg}").inside{
                         //     echo "start inside"
                         //     sh 'npm start'
@@ -58,9 +59,9 @@ pipeline {
                         //     echo "start inside"
                         //     sh 'npm start'
                         // }
-                        withDockerContainer(image: 'i-kamal02-master') {
-                            sh 'npm start'
-                        }
+                        // withDockerContainer(image: 'i-kamal02-master') {
+                        //     sh 'npm start'
+                        // }
                     } 
                 }
             }   
