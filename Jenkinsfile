@@ -6,7 +6,6 @@ pipeline {
         dockerimg = "i-kamal02-master"
         containername = "c-kamal02-master"
         BUILD_DIR_JENKINS ='./'
-        dockerRunner = tool name:Test_Docker, type: 'dockerTool'
     }
 
     stages {
@@ -28,9 +27,9 @@ pipeline {
             steps{
                 script{
                     echo "docker image build start"
-                    app = dockerRunner.build("${dockerimg}")
+                    app = docker.build("${dockerimg}")
                     echo "docker image build ends"
-                    app.inside{
+                    withDockerContainer("${dockerimg}"){
                         sh "pwd"
                     }
                 }
