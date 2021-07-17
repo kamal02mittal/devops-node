@@ -23,11 +23,12 @@ pipeline {
             }
         }
 
-        stage('Test image') {           
-            app.inside {            
-             
-             sh 'npm run coverage'        
-            }    
+        stage('Test image') {  
+            steps{
+                app.inside {            
+                 sh 'npm run coverage'        
+                } 
+            }   
         }
 
         // stage('Clean and Build'){
