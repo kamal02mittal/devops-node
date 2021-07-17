@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { dockerfile true }
 
     environment {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
@@ -29,9 +29,9 @@ pipeline {
                     echo "docker image build start"
                     app = docker.build("${dockerimg}")
                     echo "docker image build ends"
-                    /*withDockerContainer("${dockerimg}"){
+                    withDockerContainer("${dockerimg}"){
                         sh "pwd"
-                    }*/
+                    }
                 }
             }
         }
@@ -45,27 +45,21 @@ pipeline {
         }*/
 
         stage('Run Test cases inside container') {  
-            agent {
-              docker {
-                image 'i-kamal02-master'
-                reuseNode true
-              }
-            }
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
-                        //bat "docker exec -d ${containername} /bin/bash npm run coverage"
+                        bat "docker exec -d ${containername} /bin/bash npm run coverage"
                         // docker.image("${dockerimg}").inside{
                         //     echo "start inside"
                         //     sh 'npm start'
                         // }
-                        app.inside{
-                            echo "start inside"
-                            sh 'npm start'
-                        }
-                        /*withDockerContainer('i-kamal02-master') {
-                            sh 'npm start'
-                        }*/
+                        // app.inside{
+                        //     echo "start inside"
+                        //     sh 'npm start'
+                        // }
+                        // withDockerContainer(image: 'i-kamal02-master') {
+                        //     sh 'npm start'
+                        // }
                     } 
                 }
             }   
