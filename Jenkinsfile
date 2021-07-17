@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        dockerimg = "i-kamal02-master";
     }
 
     stages {
@@ -17,10 +16,11 @@ pipeline {
             }
         }
 
-        stage("Build image"){
+        stage("Build Container and image"){
             steps{
                 script{
-                    app = docker.build("${dockerimg}") 
+                    bat "docker-compose up"
+                    //app = docker.build("${dockerimg}") 
                 }
             }
         }
@@ -28,8 +28,8 @@ pipeline {
         stage('Test image') {  
             steps{
                 script{
-                    app.inside {            
-                        sh 'npm run coverage'        
+                    withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
+                        sh 'npm run start'
                     } 
                 }
             }   
