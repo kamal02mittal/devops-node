@@ -27,7 +27,6 @@ pipeline {
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
-                        dockerRunner
                         app = docker.build("${dockerimg}")
                     }
                 }
