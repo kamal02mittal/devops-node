@@ -6,6 +6,7 @@ pipeline {
         dockerimg = "i-kamal02-master"
         containername = "c-kamal02-master"
         BUILD_DIR_JENKINS ='./'
+        dockerRunner = tool name:Test_Docker, type: 'dockerTool'
     }
 
     stages {
@@ -27,7 +28,7 @@ pipeline {
             steps{
                 script{
                     echo "docker image build start"
-                    app = docker.build("${dockerimg}")
+                    app = dockerRunner.build("${dockerimg}")
                     echo "docker image build ends"
                     app.inside{
                         sh "pwd"
@@ -36,15 +37,15 @@ pipeline {
             }
         }
 
-        stage("Run Docker Container"){
+        /*stage("Run Docker Container"){
             steps{
                 script{
                     bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
                 }
             }
-        }
+        }*/
 
-        stage('Run Test cases inside container') {  
+        /*stage('Run Test cases inside container') {  
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
@@ -63,7 +64,7 @@ pipeline {
                     } 
                 }
             }   
-        }
+        }*/
 
         // stage('Clean and Build'){
         //     steps{
