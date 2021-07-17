@@ -1,8 +1,10 @@
 pipeline {
-    docker {
-      label 'windows'
-      image 'mcr.microsoft.com/powershell'
-    }
+    agent {
+        docker {
+          label 'windows'
+          image 'mcr.microsoft.com/powershell'
+        }
+      }
 
     environment {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
