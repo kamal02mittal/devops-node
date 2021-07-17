@@ -54,18 +54,18 @@ pipeline {
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
-                        bat "docker exec -d ${containername} /bin/bash npm run coverage"
+                        //bat "docker exec -d ${containername} /bin/bash npm run coverage"
                         // docker.image("${dockerimg}").inside{
                         //     echo "start inside"
                         //     sh 'npm start'
                         // }
-                        // app.inside{
-                        //     echo "start inside"
-                        //     sh 'npm start'
-                        // }
-                        withDockerContainer('i-kamal02-master') {
+                        app.inside{
+                            echo "start inside"
                             sh 'npm start'
                         }
+                        /*withDockerContainer('i-kamal02-master') {
+                            sh 'npm start'
+                        }*/
                     } 
                 }
             }   
