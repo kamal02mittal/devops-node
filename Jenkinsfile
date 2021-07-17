@@ -27,13 +27,14 @@ pipeline {
             steps{
                 script{
                     echo "docker image build start"
-                    docker.build("${dockerimg}").inside {
+                    /*docker.build("${dockerimg}").inside {
                         sh 'pwd'
-                    }
+                    }*/
                     echo "docker image build ends"
                     // withDockerContainer("${dockerimg}"){
                     //     sh "pwd"
                     // }
+                    bat "npm node install"
                 }
             }
         }
