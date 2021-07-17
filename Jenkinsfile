@@ -24,27 +24,33 @@ pipeline {
         }
 
         stage("Build image"){
-            steps{
-                script{
-                    echo "docker image build start"
-                    docker.build("${dockerimg}").inside {
-                        sh 'pwd'
-                    }
-                    echo "docker image build ends"
-                    // withDockerContainer("${dockerimg}"){
-                    //     sh "pwd"
-                    // }
-                }
+            node('linux') {
+                echo "linux"
             }
+            node('windows') {
+                echo "windows"
+            }
+            // steps{
+            //     script{
+            //         echo "docker image build start"
+            //         // docker.build("${dockerimg}").inside {
+            //         //     sh 'pwd'
+            //         // }
+            //         echo "docker image build ends"
+            //         // withDockerContainer("${dockerimg}"){
+            //         //     sh "pwd"
+            //         // }
+            //     }
+            // }
         }
 
-        stage("Run Docker Container"){
-            steps{
-                script{
-                    bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
-                }
-            }
-        }
+        // stage("Run Docker Container"){
+        //     steps{
+        //         script{
+        //             bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
+        //         }
+        //     }
+        // }
 
         // stage('Run Test cases inside container') {  
         //     steps{
