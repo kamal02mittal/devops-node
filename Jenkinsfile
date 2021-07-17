@@ -27,11 +27,13 @@ pipeline {
             steps{
                 script{
                     echo "docker image build start"
-                    app = docker.build("${dockerimg}")
-                    echo "docker image build ends"
-                    withDockerContainer("${dockerimg}"){
-                        sh "pwd"
+                    docker.build("${dockerimg}").inside {
+                        sh 'pwd'
                     }
+                    echo "docker image build ends"
+                    // withDockerContainer("${dockerimg}"){
+                    //     sh "pwd"
+                    // }
                 }
             }
         }
@@ -44,26 +46,26 @@ pipeline {
             }
         }*/
 
-        stage('Run Test cases inside container') {  
-            steps{
-                dir("${BUILD_DIR_JENKINS}"){
-                    script{
-                        //bat "docker exec -d ${containername} /bin/bash npm run coverage"
-                        // docker.image("${dockerimg}").inside{
-                        //     echo "start inside"
-                        //     sh 'npm start'
-                        // }
-                        // app.inside{
-                        //     echo "start inside"
-                        //     sh 'npm start'
-                        // }
-                        withDockerContainer(image: 'i-kamal02-master') {
-                            sh 'npm start'
-                        }
-                    } 
-                }
-            }   
-        }
+        // stage('Run Test cases inside container') {  
+        //     steps{
+        //         dir("${BUILD_DIR_JENKINS}"){
+        //             script{
+        //                 //bat "docker exec -d ${containername} /bin/bash npm run coverage"
+        //                 // docker.image("${dockerimg}").inside{
+        //                 //     echo "start inside"
+        //                 //     sh 'npm start'
+        //                 // }
+        //                 // app.inside{
+        //                 //     echo "start inside"
+        //                 //     sh 'npm start'
+        //                 // }
+        //                 withDockerContainer(image: 'i-kamal02-master') {
+        //                     sh 'npm start'
+        //                 }
+        //             } 
+        //         }
+        //     }   
+        // }
 
         // stage('Clean and Build'){
         //     steps{
