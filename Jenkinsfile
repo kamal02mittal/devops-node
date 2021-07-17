@@ -33,29 +33,29 @@ pipeline {
             }
         }
 
-        // stage("Run Docker Container"){
-        //     steps{
-        //         script{
-        //             bat "docker run -d --name ${containername} -p 1800:1700 ${dockerimg}" 
-        //         }
-        //     }
-        // }
-
-        stage('Test image') {  
+        stage("Run Docker Container"){
             steps{
-                dir("${BUILD_DIR_JENKINS}"){
-                    script{
-                        app.inside{
-                            echo "start inside"
-                            sh 'npm start'
-                        }
-                        // withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
-                        //     sh 'npm start'
-                        // }
-                    } 
+                script{
+                    bat "docker run -d --name ${containername} -p 1800:1700 ${dockerimg}" 
                 }
-            }   
+            }
         }
+
+        // stage('Test image') {  
+        //     steps{
+        //         dir("${BUILD_DIR_JENKINS}"){
+        //             script{
+        //                 app.inside{
+        //                     echo "start inside"
+        //                     sh 'npm start'
+        //                 }
+        //                 // withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
+        //                 //     sh 'npm start'
+        //                 // }
+        //             } 
+        //         }
+        //     }   
+        // }
 
         // stage('Clean and Build'){
         //     steps{
