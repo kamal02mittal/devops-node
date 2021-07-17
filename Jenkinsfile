@@ -5,7 +5,6 @@ pipeline {
         dockerimg = "i-kamal02-master"
         containername = "c-kamal02-master"
         BUILD_DIR_JENKINS ='./'
-        def app = ""
     }
 
     stages {
@@ -24,54 +23,46 @@ pipeline {
         }
 
         stage("Build image"){
-            node('linux') {
-                echo "linux"
+            steps{
+                script{
+                    echo "docker image build start"
+                    docker.build("${dockerimg}"
+                    echo "docker image build ends"
+                    // withDockerContainer("${dockerimg}"){
+                    //     sh "pwd"
+                    // }
+                }
             }
-            node('windows') {
-                echo "windows"
-            }
-            // steps{
-            //     script{
-            //         echo "docker image build start"
-            //         // docker.build("${dockerimg}").inside {
-            //         //     sh 'pwd'
-            //         // }
-            //         echo "docker image build ends"
-            //         // withDockerContainer("${dockerimg}"){
-            //         //     sh "pwd"
-            //         // }
-            //     }
-            // }
         }
 
-        // stage("Run Docker Container"){
-        //     steps{
-        //         script{
-        //             bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
-        //         }
-        //     }
-        // }
+        stage("Run Docker Container"){
+            steps{
+                script{
+                    bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
+                }
+            }
+        }
 
-        // stage('Run Test cases inside container') {  
-        //     steps{
-        //         dir("${BUILD_DIR_JENKINS}"){
-        //             script{
-        //                 bat "docker exec -d ${containername} /bin/bash npm run test"
-        //                 // docker.image("${dockerimg}").inside{
-        //                 //     echo "start inside"
-        //                 //     sh 'npm start'
-        //                 // }
-        //                 // app.inside{
-        //                 //     echo "start inside"
-        //                 //     sh 'npm start'
-        //                 // }
-        //                 // withDockerContainer(image: 'i-kamal02-master') {
-        //                 //     sh 'npm start'
-        //                 // }
-        //             } 
-        //         }
-        //     }   
-        // }
+        stage('Run Test cases inside container') {  
+            steps{
+                dir("${BUILD_DIR_JENKINS}"){
+                    script{
+                        bat "docker exec -d ${containername} /bin/bash npm run coverage"
+                        // docker.image("${dockerimg}").inside{
+                        //     echo "start inside"
+                        //     sh 'npm start'
+                        // }
+                        // app.inside{
+                        //     echo "start inside"
+                        //     sh 'npm start'
+                        // }
+                        // withDockerContainer(image: 'i-kamal02-master') {
+                        //     sh 'npm start'
+                        // }
+                    } 
+                }
+            }   
+        }
 
         // stage('Clean and Build'){
         //     steps{

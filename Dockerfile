@@ -6,10 +6,7 @@ COPY tests tests
 
 ENV NODE_ENV production
 
-RUN npm update && \
-    npm install -g mocha && \
-    npm install supertest --save-dev && \
-    npm install mocha-sonarqube-reporter --save-dev
+RUN npm update && npm install -g mocha && npm install supertest --save-dev && npm install mocha-sonarqube-reporter --save-dev && npm update
 
 CMD ["node", "app.js", "mocha", "tests/test.js", "--reporter", "spec", "supertest", "mocha-sonarqube-reporter", "--reporter-options", "output=coverage/test_results.xml"]
 
