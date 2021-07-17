@@ -5,23 +5,30 @@ pipeline {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
         dockerimg = "i-kamal02-master"
         containername = "c-kamal02-master"
+        BUILD_DIR_JENKINS ='./'
     }
 
     stages {
         stage('Checkout Source Code') {
             steps {
-                echo "Clean old checkout from workspace"
-                cleanWs()
-                echo "Source Code Checkout start"
-                checkout scm
-                echo "Source Code Checkout stop"
+                dir("${BUILD_DIR_JENKINS}"){
+                    script{
+                        echo "Clean old checkout from workspace"
+                        cleanWs()
+                        echo "Source Code Checkout start"
+                        checkout scm
+                        echo "Source Code Checkout stop"
+                    }
+                }
             }
         }
 
         stage("Build image"){
             steps{
-                script{
-                    app = docker.build("${dockerimg}") 
+                dir("${BUILD_DIR_JENKINS}"){
+                    script{
+                        app = docker.build("${dockerimg}")
+                    }
                 }
             }
         }
@@ -36,9 +43,15 @@ pipeline {
 
         stage('Test image') {  
             steps{
-                script{
-                    app.inside {
-                        sh 'npm start'
+                dir("${BUILD_DIR_JENKINS}"){
+                    script{
+                        app.inside{
+                            sh 'echo "start inside"'
+                            sh 'npm start'
+                        }
+                        // withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
+                        //     sh 'npm start'
+                        // }
                     } 
                 }
             }   
