@@ -11,4 +11,6 @@ RUN npm update && \
     npm install supertest --save-dev && \
     npm install mocha-sonarqube-reporter --save-dev
 
-CMD ["node", "app.js", "mocha", "tests/test.js", "--reporter", "spec", "supertest", "mocha-sonarqube-reporter", "--reporter-options", "output=coverage/test_results.xml"]
+EXPOSE 1700
+
+CMD ["npm", "run", "start", "coverage","node", "app.js", "mocha", "tests/test.js", "--reporter", "spec", "supertest", "mocha-sonarqube-reporter", "--reporter-options", "output=coverage/test_results.xml"]
