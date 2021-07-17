@@ -46,7 +46,7 @@ pipeline {
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
                         app.inside{
-                            sh 'echo "start inside"'
+                            echo "start inside"
                             sh 'npm start'
                         }
                         // withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
