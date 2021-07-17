@@ -37,7 +37,7 @@ pipeline {
         stage('Test image') {  
             steps{
                 script{
-                    withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
+                    app.inside {
                         sh 'npm start'
                     } 
                 }
