@@ -19,15 +19,19 @@ pipeline {
 
         stage("Build image"){
             steps{
-                app = docker.build("brandonjones085/test") 
+                script{
+                    app = docker.build("brandonjones085/test") 
+                }
             }
         }
 
         stage('Test image') {  
             steps{
-                app.inside {            
-                 sh 'npm run coverage'        
-                } 
+                script{
+                    app.inside {            
+                     sh 'npm run coverage'        
+                    } 
+                }
             }   
         }
 
