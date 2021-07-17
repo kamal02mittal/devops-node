@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+    docker {
+      label 'windows'
+      image 'mcr.microsoft.com/powershell'
+    }
 
     environment {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
@@ -26,40 +29,36 @@ pipeline {
         stage("Build image"){
             steps{
                 script{
-                    withDockerRegistry(credentialsId: 'dockercredentials', url: 'https://registry.hub.docker.com'){
-                        echo "docker image build start"
-                        app = docker.build("${dockerimg}")
-                        echo "docker image build ends"
-                    }
+                    echo "docker image build start"
+                    app = docker.build("${dockerimg}")
+                    echo "docker image build ends"
                 }
             }
         }
 
-/*        stage("Run Docker Container"){
+        stage("Run Docker Container"){
             steps{
                 script{
                     bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
                 }
             }
         }
-*/
+
         stage('Test image') {  
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
-                        withDockerRegistry(credentialsId: 'dockercredentials', url: 'https://registry.hub.docker.com'){
-                            app.inside{
-                                echo "start inside"
-                                sh 'npm start'
-                            }
-                        }
                         // docker.image("${dockerimg}").inside{
                         //     echo "start inside"
                         //     sh 'npm start'
                         // }
-                        /*withDockerContainer(image: 'i-kamal02-master') {
+                        // app.inside{
+                        //     echo "start inside"
+                        //     sh 'npm start'
+                        // }
+                        withDockerContainer(image: 'i-kamal02-master') {
                             sh 'npm start'
-                        }*/
+                        }
                     } 
                 }
             }   
@@ -93,3 +92,4 @@ pipeline {
         // }
     }
 }
+//withDockerRegistry(credentialsId: 'dockercredentials', url: 'https://registry.hub.docker.com'){
