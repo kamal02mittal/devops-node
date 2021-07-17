@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  webapplication2:
+    image: i-kamal02-master
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: c-kamal02-master
