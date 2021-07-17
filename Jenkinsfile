@@ -1,5 +1,7 @@
 pipeline {
-    agent { dockerfile true }
+    agent{
+        label 'linux'
+    }
 
     environment {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
@@ -48,7 +50,7 @@ pipeline {
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
-                        bat "docker exec -d ${containername} /bin/bash npm run coverage"
+                        //bat "docker exec -d ${containername} /bin/bash npm run coverage"
                         // docker.image("${dockerimg}").inside{
                         //     echo "start inside"
                         //     sh 'npm start'
@@ -57,9 +59,9 @@ pipeline {
                         //     echo "start inside"
                         //     sh 'npm start'
                         // }
-                        // withDockerContainer(image: 'i-kamal02-master') {
-                        //     sh 'npm start'
-                        // }
+                        withDockerContainer(image: 'i-kamal02-master') {
+                            sh 'npm start'
+                        }
                     } 
                 }
             }   
