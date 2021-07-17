@@ -36,7 +36,7 @@ pipeline {
         stage("Run Docker Container"){
             steps{
                 script{
-                    bat "${dockerRunner} run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
+                    bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
                 }
             }
         }
