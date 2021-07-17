@@ -1,9 +1,9 @@
 version: '3.4'
 
 services:
-  webapplication2:
-    image: i-kamal02-master
+  nagp-devops:
+    image: i-kamal02-masterr
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: c-kamal02-master
+    container_name: c-kamal02-masterr

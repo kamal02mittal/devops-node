@@ -13,4 +13,4 @@ RUN npm update && \
 
 EXPOSE 1700
 
-CMD ["npm", "run", "start", "coverage","node", "app.js", "mocha", "tests/test.js", "--reporter", "spec", "supertest", "mocha-sonarqube-reporter", "--reporter-options", "output=coverage/test_results.xml"]
+CMD ["node", "app.js", "mocha", "tests/test.js", "--reporter", "spec", "supertest", "mocha-sonarqube-reporter", "--reporter-options", "output=coverage/test_results.xml"]
