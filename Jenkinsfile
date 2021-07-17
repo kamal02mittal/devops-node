@@ -5,6 +5,7 @@ pipeline {
         dockerimg = "i-kamal02-master"
         containername = "c-kamal02-master"
         BUILD_DIR_JENKINS ='./'
+        def app = ""
     }
 
     stages {
