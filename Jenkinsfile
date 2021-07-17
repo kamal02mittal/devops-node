@@ -6,6 +6,7 @@ pipeline {
         dockerimg = "i-kamal02-master"
         containername = "c-kamal02-master"
         BUILD_DIR_JENKINS ='./'
+        dockerRunner = tool name: 'Test_Docker'
     }
 
     stages {
@@ -27,39 +28,39 @@ pipeline {
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
-                        app = docker.build("${dockerimg}")
+                        app = dockerRunner.build("${dockerimg}")
                     }
                 }
             }
         }
 
-        /*stage("Run Docker Container"){
+        stage("Run Docker Container"){
             steps{
                 script{
-                    bat "docker run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
+                    bat "${dockerRunner} run -d --name ${containername} -p 1700:1700 ${dockerimg}" 
                 }
             }
-        }*/
-
-        stage('Test image') {  
-            steps{
-                dir("${BUILD_DIR_JENKINS}"){
-                    script{
-                        docker.image("${dockerimg}").inside{
-                            echo "start inside"
-                            sh 'npm start'
-                        }
-                        // app.inside{
-                        //     echo "start inside"
-                        //     sh 'npm start'
-                        // }
-                        // withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
-                        //     sh 'npm start'
-                        // }
-                    } 
-                }
-            }   
         }
+
+        // stage('Test image') {  
+        //     steps{
+        //         dir("${BUILD_DIR_JENKINS}"){
+        //             script{
+        //                 docker.image("${dockerimg}").inside{
+        //                     echo "start inside"
+        //                     sh 'npm start'
+        //                 }
+        //                 // app.inside{
+        //                 //     echo "start inside"
+        //                 //     sh 'npm start'
+        //                 // }
+        //                 // withDockerContainer(image: 'i-kamal02-master', toolName: 'Test_Docker') {
+        //                 //     sh 'npm start'
+        //                 // }
+        //             } 
+        //         }
+        //     }   
+        // }
 
         // stage('Clean and Build'){
         //     steps{
