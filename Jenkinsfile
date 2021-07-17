@@ -26,7 +26,7 @@ pipeline {
             steps{
                 script{
                     echo "docker image build start"
-                    docker.build("${dockerimg}"
+                    docker.build("${dockerimg}")
                     echo "docker image build ends"
                     // withDockerContainer("${dockerimg}"){
                     //     sh "pwd"
