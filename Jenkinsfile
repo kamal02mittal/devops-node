@@ -29,6 +29,9 @@ pipeline {
                     echo "docker image build start"
                     app = docker.build("${dockerimg}")
                     echo "docker image build ends"
+                    app.inside{
+                        sh "pwd"
+                    }
                 }
             }
         }
@@ -45,7 +48,7 @@ pipeline {
             steps{
                 dir("${BUILD_DIR_JENKINS}"){
                     script{
-                        bat "docker exec -d ${containername} /bin/bash npm test"
+                        bat "docker exec -d ${containername} /bin/bash npm run coverage"
                         // docker.image("${dockerimg}").inside{
                         //     echo "start inside"
                         //     sh 'npm start'
